@@ -8,6 +8,18 @@ class TournamentSerializer(serializers.ModelSerializer):
         model = Tournament
         fields = ['id', 'name', 'teams', 'quantity']
 
+    def validate_quantity(self, value):
+        if value % 2 != 0:
+            raise serializers.ValidationError('Must be even')
+
+        if value < 2:
+            raise serializers.ValidationError('Must be at least 2')
+
+        if value > Team.objects.count():
+            raise serializers.ValidationError('Must be inferior to the number of teams available')
+        
+        return value
+
 
 class TeamSerializer(serializers.ModelSerializer):
     class Meta:
