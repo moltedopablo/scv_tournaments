@@ -1,3 +1,4 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
 
 from scv_api.models import Tournament, Team, MatchDay, Match
@@ -22,3 +23,5 @@ class MatchDayView(viewsets.ModelViewSet):
 class MatchView(viewsets.ModelViewSet):
     queryset = Match.objects.all()
     serializer_class = MatchSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('matchday__tournament',)
