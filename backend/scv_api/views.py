@@ -18,10 +18,12 @@ class TeamView(viewsets.ModelViewSet):
 class MatchDayView(viewsets.ModelViewSet):
     queryset = MatchDay.objects.all()
     serializer_class = MatchDaySerializer
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('tournament',)
 
 
 class MatchView(viewsets.ModelViewSet):
     queryset = Match.objects.all()
     serializer_class = MatchSerializer
     filter_backends = (DjangoFilterBackend,)
-    filter_fields = ('matchday__tournament',)
+    filter_fields = ('matchday',)
