@@ -1,8 +1,6 @@
 import itertools
-
-from django.apps import apps
-from django.core.exceptions import ValidationError
 from django.db import models
+from django.db.models import F
 
 
 class Team(models.Model):
@@ -14,21 +12,30 @@ class Tournament(models.Model):
     teams = models.ManyToManyField(Team, through='TournamentTeam')
     quantity = models.IntegerField()
 
+    @property
+    def positions(self):
+        teams = TournamentTeam.objects.filter(tournament=self)
+        positions = []
+        for tt in teams:
+            positions.append({
+                'name': tt.team.name,
+                'won': tt.matches_won,
+                'lost': tt.matches_lost,
+                'tie': tt.matches_tie,
+                'score': tt.matches_won * 3 + tt.matches_tie})
+        return sorted(positions, key=lambda i: i['score'], reverse=True)
+
     def add_teams(self, teams):
         for team in teams:
-            TournamentTeam = apps.get_model(app_label='scv_api', model_name='TournamentTeam')
             tt = TournamentTeam(tournament=self, team=team)
             tt.save()
 
     def generate_matches(self):
-        TournamentTeam = apps.get_model(app_label='scv_api', model_name='TournamentTeam')
-        MatchDay = apps.get_model(app_label='scv_api', model_name='MatchDay')
-        Match = apps.get_model(app_label='scv_api', model_name='Match')
         tournament_teams = TournamentTeam.objects.filter(tournament=self).values_list('team_id', flat=True)
         combinations = itertools.combinations(tournament_teams, 2)
         i = 0
         for c in combinations:
-            if i % (self.quantity/2) == 0:
+            if i % (self.quantity / 2) == 0:
                 md = MatchDay(tournament=self, number=i + 1)
                 md.save()
             home_team = Team.objects.get(pk=c[0])
@@ -47,6 +54,38 @@ class Tournament(models.Model):
 class TournamentTeam(models.Model):
     tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
+
+    @property
+    def matches_won(self):
+        home_won = Match.objects.filter(matchday__tournament=self.tournament, home_team=self.team,
+                                        home_goals__gt=F('away_goals')).count()
+        away_won = Match.objects.filter(matchday__tournament=self.tournament, away_team=self.team,
+                                        away_goals__gt=F('home_goals')).count()
+        return home_won + away_won
+
+    @property
+    def matches_lost(self):
+        home_lost = Match.objects.filter(matchday__tournament=self.tournament, home_team=self.team,
+                                         home_goals__lt=F('away_goals')).count()
+        away_lost = Match.objects.filter(matchday__tournament=self.tournament, away_team=self.team,
+                                         away_goals__lt=F('home_goals')).count()
+        return home_lost + away_lost
+
+    @property
+    def matches_won(self):
+        home_won = Match.objects.filter(matchday__tournament=self.tournament, home_team=self.team,
+                                        home_goals__gt=F('away_goals')).count()
+        away_won = Match.objects.filter(matchday__tournament=self.tournament, away_team=self.team,
+                                        away_goals__gt=F('home_goals')).count()
+        return home_won + away_won
+
+    @property
+    def matches_tie(self):
+        home_tie = Match.objects.filter(matchday__tournament=self.tournament, home_team=self.team,
+                                        home_goals=F('away_goals')).count()
+        away_tie = Match.objects.filter(matchday__tournament=self.tournament, away_team=self.team,
+                                        away_goals=F('home_goals')).count()
+        return home_tie + away_tie
 
 
 class MatchDay(models.Model):

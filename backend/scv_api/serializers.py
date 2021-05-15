@@ -6,7 +6,7 @@ from scv_api.models import Tournament, Team, MatchDay, Match
 class TournamentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tournament
-        fields = ['id', 'name', 'teams', 'quantity']
+        fields = ['id', 'name', 'teams', 'quantity', 'positions']
 
     def validate_quantity(self, value):
         if value % 2 != 0:
@@ -17,7 +17,7 @@ class TournamentSerializer(serializers.ModelSerializer):
 
         if value > Team.objects.count():
             raise serializers.ValidationError('Must be inferior to the number of teams available')
-        
+
         return value
 
 
