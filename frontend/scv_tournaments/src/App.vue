@@ -1,18 +1,32 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-    <b-btn variant="primary">Click</b-btn>
+    <h2 class="mt-4">Tournaments</h2>
+    <b-table small sticky-header striped hover :items="tournaments"
+             :fields="['name']" show-empty :empty-text="'No tournaments'"
+             no-border-collapse>
+    </b-table>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+// import HelloWorld from './components/HelloWorld.vue'
+
+const axios = require('axios');
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    // HelloWorld
+  },
+  data: function () {
+    return {
+      tournaments: [],
+    }
+  },
+  created: function () {
+    axios.get('/backend/api/tournament.json').then(response => {
+      this.tournaments = response.data
+    })
   }
 }
 </script>
