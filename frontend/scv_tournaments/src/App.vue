@@ -6,16 +6,7 @@
       <b-row class="mt-3">
         <b-col cols="8">
           <div v-for="matchday in matchdays" :key="matchday.id">
-            <b-card
-                :header="'Fecha ' + matchday.number"
-                class="mb-2"
-                align="left"
-            >
-              <b-card-text >
-                test
-              </b-card-text>
-
-            </b-card>
+            <Matchday :matchday="matchday"/>
           </div>
         </b-col>
         <b-col cols="4">
@@ -32,6 +23,7 @@
 <script>
 import Navbar from './components/Navbar.vue';
 import ModalTournaments from './components/ModalTournaments.vue';
+import Matchday from "./components/Matchday";
 
 const axios = require('axios');
 
@@ -39,7 +31,8 @@ export default {
   name: 'App',
   components: {
     Navbar,
-    ModalTournaments
+    ModalTournaments,
+    Matchday
   },
   data: function () {
     return {
