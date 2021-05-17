@@ -1,31 +1,69 @@
 <template>
   <div id="app">
-    <h2 class="mt-4">Tournaments</h2>
-    <b-table small sticky-header striped hover :items="tournaments"
-             :fields="['name']" show-empty :empty-text="'No tournaments'"
-             no-border-collapse>
-    </b-table>
+    <Navbar/>
+    <ModalTournaments :tournaments="tournaments"/>
+    <b-container>
+      <b-row class="mt-3">
+        <b-col cols="8">
+          <div v-for="matchday in matchdays" :key="matchday.id">
+            <b-card
+                :header="'Fecha ' + matchday.number"
+                class="mb-2"
+                align="left"
+            >
+              <b-card-text >
+                test
+              </b-card-text>
+
+            </b-card>
+          </div>
+        </b-col>
+        <b-col cols="4">
+          <b-table v-if="tournament" small sticky-header striped hover :items="tournament.positions"
+                   :fields="['name', 'won', 'lost', 'tie', 'score']"
+                   no-border-collapse>
+          </b-table>
+        </b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
+import Navbar from './components/Navbar.vue';
+import ModalTournaments from './components/ModalTournaments.vue';
 
 const axios = require('axios');
 
 export default {
   name: 'App',
   components: {
-    // HelloWorld
+    Navbar,
+    ModalTournaments
   },
   data: function () {
     return {
+      current_tournament: 1,
       tournaments: [],
+      tournament: null,
+      matchdays: []
     }
   },
   created: function () {
     axios.get('/backend/api/tournament.json').then(response => {
       this.tournaments = response.data
+    })
+
+    axios.get('/backend/api/tournament/' + this.current_tournament + '/', {
+      params: {format: 'json',}
+    }).then(response => {
+      this.tournament = response.data
+    })
+
+    axios.get('/backend/api/matchday/', {
+      params: {format: 'json', tournament: this.current_tournament}
+    }).then(response => {
+      this.matchdays = response.data
     })
   }
 }
@@ -38,6 +76,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
