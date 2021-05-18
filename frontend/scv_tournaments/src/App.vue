@@ -42,22 +42,31 @@ export default {
       matchdays: []
     }
   },
+  methods: {
+    fetchTournaments() {
+      axios.get('/backend/api/tournament.json').then(response => {
+        this.tournaments = response.data
+      })
+    },
+    fetchTournament() {
+      axios.get('/backend/api/tournament/' + this.current_tournament + '/', {
+        params: {format: 'json',}
+      }).then(response => {
+        this.tournament = response.data
+      })
+    },
+    fetchMatchdays() {
+      axios.get('/backend/api/matchday/', {
+        params: {format: 'json', tournament: this.current_tournament}
+      }).then(response => {
+        this.matchdays = response.data
+      })
+    }
+  },
   created: function () {
-    axios.get('/backend/api/tournament.json').then(response => {
-      this.tournaments = response.data
-    })
-
-    axios.get('/backend/api/tournament/' + this.current_tournament + '/', {
-      params: {format: 'json',}
-    }).then(response => {
-      this.tournament = response.data
-    })
-
-    axios.get('/backend/api/matchday/', {
-      params: {format: 'json', tournament: this.current_tournament}
-    }).then(response => {
-      this.matchdays = response.data
-    })
+    this.fetchTournaments()
+    this.fetchTournament()
+    this.fetchMatchdays()
   }
 }
 </script>
