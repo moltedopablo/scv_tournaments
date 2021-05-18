@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-modal id="modal-tournaments" title="BootstrapVue">
+    <b-modal id="modal-tournaments" title="Cambiar de Torneo">
       <b-table small sticky-header striped hover :items="tournaments"
                :fields="['name']" show-empty :empty-text="'No tournaments'"
                no-border-collapse>
@@ -12,7 +12,6 @@
 export default {
   data() {
     return {
-      meal: ''
     }
   },
   methods: {},
