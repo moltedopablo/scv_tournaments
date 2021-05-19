@@ -10,6 +10,7 @@
             </b-nav-form>
             <b-button
                 size="sm"
+                variant="light"
                 class="my-2 my-sm-0"
                 type="submit"
                 @click="resetTournament()"
