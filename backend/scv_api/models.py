@@ -31,18 +31,27 @@ class Tournament(models.Model):
             tt.save()
 
     def generate_matches(self):
-        tournament_teams = TournamentTeam.objects.filter(tournament=self).values_list('team_id', flat=True)
-        combinations = itertools.combinations(tournament_teams, 2)
+        teams = list(TournamentTeam.objects.filter(tournament=self).values_list('team_id', flat=True))
+        n = len(teams)
+        matches = []
+        matchdays = []
+        for fixture in range(1, n):
+            for i in range(n // 2):
+                matches.append((teams[i], teams[n - 1 - i]))
+            teams.insert(1, teams.pop())
+            matchdays.insert(len(matchdays) // 2, matches)
+            matches = []
+
         i = 0
-        for c in combinations:
-            if i % (self.quantity / 2) == 0:
-                md = MatchDay(tournament=self, number=i + 1)
-                md.save()
-            home_team = Team.objects.get(pk=c[0])
-            away_team = Team.objects.get(pk=c[1])
-            m = Match(matchday=md, home_team=home_team, away_team=away_team)
-            m.save()
+        for matchday in matchdays:
+            md = MatchDay(tournament=self, number=i + 1)
+            md.save()
             i += 1
+            for match in matchday:
+                home_team = Team.objects.get(pk=match[0])
+                away_team = Team.objects.get(pk=match[1])
+                m = Match(matchday=md, home_team=home_team, away_team=away_team)
+                m.save()
 
     def save(self, *args, **kwargs):
         super(Tournament, self).save(*args, **kwargs)
