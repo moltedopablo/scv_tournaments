@@ -1,12 +1,17 @@
 <template>
   <div id="app">
     <Navbar/>
-    <ModalTournaments :tournaments="tournaments"/>
+
     <b-container>
-      <b-row class="mt-3">
+      <b-row class="mt-3 text-left">
         <b-col cols="8">
-          <div v-for="matchday in matchdays" :key="matchday.id">
-            <Matchday :matchday="matchday"/>
+          <div v-if="current_tournament">
+            <div v-for="matchday in matchdays" :key="matchday.id">
+              <Matchday :matchday="matchday"/>
+            </div>
+          </div>
+          <div v-else>
+            <Tournaments v-if="tournaments" :tournaments="tournaments"/>
           </div>
         </b-col>
         <b-col cols="4">
@@ -22,7 +27,7 @@
 
 <script>
 import Navbar from './components/Navbar.vue';
-import ModalTournaments from './components/ModalTournaments.vue';
+import Tournaments from './components/Tournaments.vue';
 import Matchday from "./components/Matchday";
 
 const axios = require('axios');
@@ -31,18 +36,23 @@ export default {
   name: 'App',
   components: {
     Navbar,
-    ModalTournaments,
+    Tournaments,
     Matchday
   },
   data: function () {
     return {
-      current_tournament: 1,
+      current_tournament: null,
       tournaments: [],
       tournament: null,
       matchdays: []
     }
   },
   methods: {
+    selectTournament(id) {
+      this.current_tournament = id
+      this.fetchTournament()
+      this.fetchMatchdays()
+    },
     fetchTournaments() {
       axios.get('/backend/api/tournament.json').then(response => {
         this.tournaments = response.data
@@ -65,8 +75,6 @@ export default {
   },
   created: function () {
     this.fetchTournaments()
-    this.fetchTournament()
-    this.fetchMatchdays()
   }
 }
 </script>
