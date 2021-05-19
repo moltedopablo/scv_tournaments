@@ -17,7 +17,7 @@
           </div>
         </b-col>
         <b-col cols="4">
-          <b-table v-if="tournament" small sticky-header striped hover :items="tournament.positions"
+          <b-table v-if="tournament" small striped hover :items="tournament.positions"
                    :fields="['name', 'won', 'lost', 'tie', 'score']"
                    no-border-collapse>
           </b-table>

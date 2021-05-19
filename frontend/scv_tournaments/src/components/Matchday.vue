@@ -6,7 +6,7 @@
       no-body
   >
 
-    <b-table-lite small sticky-header striped hover :items="matches"
+    <b-table-lite small striped hover :items="matches"
                   :fields="['home_team.name', 'away_team.name', 'home_goals_input', 'away_goals_input', 'save']"
                   show-empty
                   :empty-text="'No tournaments'"
