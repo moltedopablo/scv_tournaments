@@ -52,6 +52,10 @@ export default {
     }
   },
   methods: {
+    resetTournament(){
+      this.current_tournament = null
+      this.tournament = null
+    },
     selectTournament(id) {
       this.current_tournament = id
       this.fetchTournament()

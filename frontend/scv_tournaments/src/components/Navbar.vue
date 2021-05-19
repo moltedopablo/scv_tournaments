@@ -2,7 +2,7 @@
   <div>
     <b-navbar toggleable="lg" type="dark" variant="success">
       <b-container>
-        <b-navbar-brand href="#">Torneos App!</b-navbar-brand>
+        <b-navbar-brand @click="resetTournament()" href="#">Torneos App!</b-navbar-brand>
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav class="ml-auto">
@@ -12,7 +12,7 @@
                 size="sm"
                 class="my-2 my-sm-0"
                 type="submit"
-                @click="$bvModal.show('modal-tournaments')"
+                @click="resetTournament()"
             >Cambiar Torneo
             </b-button>
           </b-navbar-nav>
@@ -23,11 +23,10 @@
 </template>
 <script>
 export default {
-  data() {
-    return {
-      meal: ''
+  methods: {
+    resetTournament() {
+      this.$parent.resetTournament();
     }
-  },
-  methods: {}
+  }
 }
 </script>
