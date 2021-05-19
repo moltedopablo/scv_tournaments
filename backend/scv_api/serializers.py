@@ -10,13 +10,15 @@ class TournamentSerializer(serializers.ModelSerializer):
 
     def validate_quantity(self, value):
         if value % 2 != 0:
-            raise serializers.ValidationError('Must be even')
+            raise serializers.ValidationError('Debe ser un número par')
 
         if value < 2:
-            raise serializers.ValidationError('Must be at least 2')
+            raise serializers.ValidationError('Deben ser al menos')
 
-        if value > Team.objects.count():
-            raise serializers.ValidationError('Must be inferior to the number of teams available')
+        teams_count = Team.objects.count()
+        if value > teams_count:
+            raise serializers.ValidationError(
+                f'La cantidad de equipos cargados es {teams_count}. No puede exceder la misma')
 
         return value
 
