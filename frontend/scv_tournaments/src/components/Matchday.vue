@@ -20,8 +20,8 @@
                class="numberinput form-control">
       </template>
       <template #cell(save)="data">
-        <button class="btn btn-sm btn-danger"
-                v-on:click="save(data.item)">Guardar
+        <button class="btn btn-sm btn-primary"
+                v-on:click="save(data.item)"><b-icon icon="upload"></b-icon>
         </button>
       </template>
     </b-table-lite>
