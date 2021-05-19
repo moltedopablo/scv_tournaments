@@ -3,9 +3,10 @@
     <Navbar/>
 
     <b-container>
+      <h3 v-if="tournament" class="mt-3 mb-2 text-left">Torneo: {{tournament.name}}</h3>
       <b-row class="mt-3 text-left">
         <b-col cols="8">
-          <div v-if="current_tournament">
+          <div v-if="tournament">
             <div v-for="matchday in matchdays" :key="matchday.id">
               <Matchday :matchday="matchday"/>
             </div>
