@@ -11,7 +11,8 @@
             </div>
           </div>
           <div v-else>
-            <Tournaments v-if="tournaments" :tournaments="tournaments"/>
+            <Tournaments v-if="tournaments.length" :tournaments="tournaments"/>
+            <TournamentForm />
           </div>
         </b-col>
         <b-col cols="4">
@@ -28,7 +29,8 @@
 <script>
 import Navbar from './components/Navbar.vue';
 import Tournaments from './components/Tournaments.vue';
-import Matchday from "./components/Matchday";
+import Matchday from "./components/Matchday.vue";
+import TournamentForm from "./components/TournamentForm.vue";
 
 const axios = require('axios');
 
@@ -37,7 +39,8 @@ export default {
   components: {
     Navbar,
     Tournaments,
-    Matchday
+    Matchday,
+    TournamentForm
   },
   data: function () {
     return {
