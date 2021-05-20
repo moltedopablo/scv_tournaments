@@ -55,6 +55,7 @@ export default {
     resetTournament() {
       this.current_tournament = null
       this.tournament = null
+      this.fetchTournaments()
     },
     selectTournament(id) {
       this.current_tournament = id
