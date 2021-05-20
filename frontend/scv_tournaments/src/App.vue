@@ -14,7 +14,7 @@
         </b-col>
       </b-row>
       <b-row v-if="!tournament" class="mt-3 text-left">
-        <b-col lg="8">
+        <b-col lg="8" class="mb-3">
           <Tournaments :tournaments="tournaments"/>
         </b-col>
         <b-col lg="4">
