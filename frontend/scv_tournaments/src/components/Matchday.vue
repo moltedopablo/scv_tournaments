@@ -5,32 +5,32 @@
       align="left"
       no-body
   >
-
-    <b-table-lite small striped hover :items="matches"
-                  :fields="[{key:'home_team.name', label:'Local'},
+    <div class="p-3">
+      <b-table-lite small striped hover :items="matches"
+                    :fields="[{key:'home_team.name', label:'Local'},
                    {key:'away_team.name', label:'Visitante'},
                     {key:'home_goals_input', label:'Goles Local'},
                      {key:'away_goals_input', label:'Goles Visitante'},
                      {key:'save', label:''}]"
-                  show-empty
-                  :empty-text="'No tournaments'"
-                  no-border-collapse>
-      <template #cell(home_goals_input)="data">
-        <input type="number" v-model="data.item.home_goals" step="1"
-               class="numberinput form-control">
-      </template>
-      <template #cell(away_goals_input)="data">
-        <input type="number" v-model="data.item.away_goals" step="1"
-               class="numberinput form-control">
-      </template>
-      <template #cell(save)="data">
-        <button class="btn btn-sm btn-primary"
-                v-on:click="save(data.item)">
-          <b-icon icon="upload"></b-icon>
-        </button>
-      </template>
-    </b-table-lite>
-
+                    show-empty
+                    :empty-text="'No tournaments'"
+                    no-border-collapse>
+        <template #cell(home_goals_input)="data">
+          <input type="number" v-model="data.item.home_goals" step="1"
+                 class="numberinput form-control">
+        </template>
+        <template #cell(away_goals_input)="data">
+          <input type="number" v-model="data.item.away_goals" step="1"
+                 class="numberinput form-control">
+        </template>
+        <template #cell(save)="data">
+          <button class="btn btn-sm btn-primary"
+                  v-on:click="save(data.item)">
+            <b-icon icon="upload"></b-icon>
+          </button>
+        </template>
+      </b-table-lite>
+    </div>
   </b-card>
 </template>
 <script>
