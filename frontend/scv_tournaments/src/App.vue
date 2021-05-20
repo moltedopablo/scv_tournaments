@@ -1,23 +1,24 @@
 <template>
   <div id="app">
     <Navbar/>
-
     <b-container>
       <h3 v-if="tournament" class="mt-3 mb-2 text-left">Torneo: {{ tournament.name }}</h3>
-      <b-row class="mt-3 text-left">
+      <b-row v-if="tournament" class="mt-3 text-left">
         <b-col cols="8">
-          <div v-if="tournament">
-            <div v-for="matchday in matchdays" :key="matchday.id">
-              <Matchday :matchday="matchday"/>
-            </div>
-          </div>
-          <div v-else>
-            <Tournaments v-if="tournaments.length" :tournaments="tournaments"/>
-            <TournamentForm/>
+          <div v-for="matchday in matchdays" :key="matchday.id">
+            <Matchday :matchday="matchday"/>
           </div>
         </b-col>
         <b-col cols="4">
           <Positions v-if="tournament" :positions="tournament.positions"/>
+        </b-col>
+      </b-row>
+      <b-row v-if="!tournament" class="mt-3 text-left">
+        <b-col cols="8">
+          <Tournaments :tournaments="tournaments"/>
+        </b-col>
+        <b-col cols="4">
+          <TournamentForm/>
         </b-col>
       </b-row>
     </b-container>

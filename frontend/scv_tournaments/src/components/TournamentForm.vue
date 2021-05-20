@@ -1,26 +1,33 @@
 <template>
   <div>
-    <h4 class="mt-4">Nuevo Torneo</h4>
-    <b-alert v-model="showErrors" variant="danger">{{ errors }}</b-alert>
-    <b-form @submit="onSubmit">
-      <b-form-group id="input-group-2" label="Nombre:" label-for="input-2">
-        <b-form-input
-            id="input-2"
-            v-model="form.name"
-            required
-        ></b-form-input>
-      </b-form-group>
-      <b-form-group id="input-group-2" label="Cantidad de Equipos:" label-for="input-2">
-        <b-form-input
-            id="input-2"
-            v-model="form.quantity"
-            type="number"
-            required
-        ></b-form-input>
-      </b-form-group>
-      <b-button type="submit" variant="primary">Guardar</b-button>
-    </b-form>
-
+    <b-card header-tag="header">
+      <template #header>
+        <h6 class="mb-0">Nuevo Torneo</h6>
+      </template>
+      <b-card-text>
+        <b-alert v-model="showErrors" variant="danger">{{ errors }}</b-alert>
+        <b-form @submit="onSubmit">
+          <b-form-group id="input-group-2" label-for="input-2">
+            <b-form-input
+                id="input-2"
+                v-model="form.name"
+                placeholder="Nombre"
+                required
+            ></b-form-input>
+          </b-form-group>
+          <b-form-group id="input-group-2" label-for="input-2">
+            <b-form-input
+                id="input-2"
+                v-model="form.quantity"
+                type="number"
+                placeholder="Cantidad de Equipos"
+                required
+            ></b-form-input>
+          </b-form-group>
+          <b-button type="submit" variant="primary">Guardar</b-button>
+        </b-form>
+      </b-card-text>
+    </b-card>
   </div>
 </template>
 
