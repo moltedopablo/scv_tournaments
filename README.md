@@ -17,7 +17,10 @@ Get the containers up
 cd scv_tournaments
 docker-compose up -d
 ```
-
+Access at
+```sh
+http://localhost:8080
+```
 ### Backend installation for development
 
 Install python 3.8 and virtual env
@@ -66,7 +69,7 @@ Run server
 ```sh
 npm run serve
 ```
-Access on
+Access at
 ```sh
 http://localhost:8080/
 ```
