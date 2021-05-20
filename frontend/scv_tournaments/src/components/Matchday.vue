@@ -9,8 +9,8 @@
       <b-table-lite small striped hover :items="matches"
                     :fields="[{key:'home_team.name', label:'Local'},
                    {key:'away_team.name', label:'Visitante'},
-                    {key:'home_goals_input', label:'Goles Local'},
-                     {key:'away_goals_input', label:'Goles Visitante'},
+                    {key:'home_goals_input', label:'', class: 'goals_colum'},
+                     {key:'away_goals_input', label:'', class: 'goals_colum',},
                      {key:'save', label:''}]"
                     show-empty
                     :empty-text="'No tournaments'"
@@ -66,3 +66,8 @@ export default {
   props: ['matchday']
 }
 </script>
+<style>
+.goals_colum {
+  max-width: 48px;
+}
+</style>
