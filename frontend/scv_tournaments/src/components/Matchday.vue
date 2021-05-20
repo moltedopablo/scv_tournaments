@@ -7,8 +7,8 @@
   >
     <div class="p-3">
       <b-table-lite small striped hover :items="matches"
-                    :fields="[{key:'home_team.name', label:'Local'},
-                   {key:'away_team.name', label:'Visitante'},
+                    :fields="[{key:'home_team.name', label:'Local', class: 'teams_column'},
+                   {key:'away_team.name', label:'Visitante',class: 'teams_column'},
                     {key:'home_goals_input', label:'', class: 'goals_column'},
                      {key:'away_goals_input', label:'', class: 'goals_column',},
                      {key:'save', label:''}]"
@@ -68,6 +68,9 @@ export default {
 </script>
 <style>
 .goals_column {
-  max-width: 48px;
+  max-width: 15%;
+}
+.teams_column {
+  width: 35%;
 }
 </style>
