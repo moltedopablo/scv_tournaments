@@ -1,6 +1,6 @@
 import itertools
 from django.db import models
-from django.db.models import F
+from django.db.models import F, Sum
 
 
 class Team(models.Model):
@@ -16,13 +16,23 @@ class Tournament(models.Model):
     def positions(self):
         teams = TournamentTeam.objects.filter(tournament=self)
         positions = []
+
         for tt in teams:
+            won = tt.matches_won
+            lost = tt.matches_lost
+            tie = tt.matches_tie
+            favor_goals = tt.favor_goals
+            against_goals = tt.against_goals
             positions.append({
                 'name': tt.team.name,
-                'won': tt.matches_won,
-                'lost': tt.matches_lost,
-                'tie': tt.matches_tie,
-                'score': tt.matches_won * 3 + tt.matches_tie})
+                'won': won,
+                'lost': lost,
+                'tie': tie,
+                'played': won + lost + tie,
+                'favor_goals': favor_goals,
+                'against_goals': against_goals,
+                'goals_difference': favor_goals - against_goals,
+                'score': won * 3 + tie})
         return sorted(positions, key=lambda i: i['score'], reverse=True)
 
     def add_teams(self, teams):
@@ -95,6 +105,31 @@ class TournamentTeam(models.Model):
         away_tie = Match.objects.filter(matchday__tournament=self.tournament, away_team=self.team,
                                         away_goals=F('home_goals')).count()
         return home_tie + away_tie
+
+    @property
+    def favor_goals(self):
+        home_goals = Match.objects.filter(matchday__tournament=self.tournament, home_team=self.team).aggregate(
+            Sum('home_goals'))
+        away_goals = Match.objects.filter(matchday__tournament=self.tournament, away_team=self.team).aggregate(
+            Sum('away_goals'))
+        if not home_goals['home_goals__sum']:
+            home_goals['home_goals__sum'] = 0
+        if not away_goals['away_goals__sum']:
+            away_goals['away_goals__sum'] = 0
+        return home_goals['home_goals__sum'] + away_goals['away_goals__sum']
+
+    @property
+    def against_goals(self):
+        home_goals = Match.objects.filter(matchday__tournament=self.tournament, home_team=self.team).aggregate(
+            Sum('away_goals'))
+        away_goals = Match.objects.filter(matchday__tournament=self.tournament, away_team=self.team).aggregate(
+            Sum('home_goals'))
+
+        if not home_goals['away_goals__sum']:
+            home_goals['away_goals__sum'] = 0
+        if not away_goals['home_goals__sum']:
+            away_goals['home_goals__sum'] = 0
+        return home_goals['away_goals__sum'] + away_goals['home_goals__sum']
 
 
 class MatchDay(models.Model):
