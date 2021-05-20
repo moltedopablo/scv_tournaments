@@ -21,5 +21,6 @@ services:
     container_name: vue-ui
     volumes:
       - ./frontend/scv_tournaments:/usr/src/app/scv_tournaments
+      - ./frontend/scv_tournaments/node_modules:/usr/src/app/scv_tournaments/node_modules
     depends_on:
       - django-api
