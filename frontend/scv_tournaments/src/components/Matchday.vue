@@ -9,8 +9,8 @@
       <b-table-lite small striped hover :items="matches"
                     :fields="[{key:'home_team.name', label:'Local'},
                    {key:'away_team.name', label:'Visitante'},
-                    {key:'home_goals_input', label:'', class: 'goals_colum'},
-                     {key:'away_goals_input', label:'', class: 'goals_colum',},
+                    {key:'home_goals_input', label:'', class: 'goals_column'},
+                     {key:'away_goals_input', label:'', class: 'goals_column',},
                      {key:'save', label:''}]"
                     show-empty
                     :empty-text="'No tournaments'"
@@ -67,7 +67,7 @@ export default {
 }
 </script>
 <style>
-.goals_colum {
+.goals_column {
   max-width: 48px;
 }
 </style>
