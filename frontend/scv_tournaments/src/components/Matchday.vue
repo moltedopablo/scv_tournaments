@@ -67,10 +67,14 @@ export default {
 }
 </script>
 <style>
-.goals_column {
-  max-width: 15%;
+@media only screen and (min-width: 600px) {
+  .goals_column {
+    max-width: 15%;
+  }
+
+  .teams_column {
+    width: 35%;
+  }
 }
-.teams_column {
-  width: 35%;
-}
+
 </style>
