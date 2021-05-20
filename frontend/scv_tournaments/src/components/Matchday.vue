@@ -7,7 +7,11 @@
   >
 
     <b-table-lite small striped hover :items="matches"
-                  :fields="['home_team.name', 'away_team.name', 'home_goals_input', 'away_goals_input', 'save']"
+                  :fields="[{key:'home_team.name', label:'Local'},
+                   {key:'away_team.name', label:'Visitante'},
+                    {key:'home_goals_input', label:'Goles Local'},
+                     {key:'away_goals_input', label:'Goles Visitante'},
+                     {key:'save', label:''}]"
                   show-empty
                   :empty-text="'No tournaments'"
                   no-border-collapse>
@@ -21,7 +25,8 @@
       </template>
       <template #cell(save)="data">
         <button class="btn btn-sm btn-primary"
-                v-on:click="save(data.item)"><b-icon icon="upload"></b-icon>
+                v-on:click="save(data.item)">
+          <b-icon icon="upload"></b-icon>
         </button>
       </template>
     </b-table-lite>
