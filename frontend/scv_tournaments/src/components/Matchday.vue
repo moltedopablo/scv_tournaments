@@ -6,7 +6,7 @@
       no-body
   >
     <div class="p-3">
-      <b-table-lite small striped hover :items="matches"
+      <b-table-lite fixed small striped hover :items="matches"
                     :fields="[{key:'home_team.name', label:'Local', class: 'teams_column'},
                    {key:'away_team.name', label:'Visitante',class: 'teams_column'},
                     {key:'home_goals_input', label:'', class: 'goals_column'},
