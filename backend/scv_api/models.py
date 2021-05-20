@@ -33,7 +33,7 @@ class Tournament(models.Model):
                 'against_goals': against_goals,
                 'goals_difference': favor_goals - against_goals,
                 'score': won * 3 + tie})
-        return sorted(positions, key=lambda i: i['score'], reverse=True)
+        return sorted(positions, key=lambda i: (i['score'], i['goals_difference']), reverse=True)
 
     def add_teams(self, teams):
         for team in teams:
