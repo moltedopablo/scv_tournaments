@@ -3,7 +3,7 @@
     <Navbar/>
 
     <b-container>
-      <h3 v-if="tournament" class="mt-3 mb-2 text-left">Torneo: {{tournament.name}}</h3>
+      <h3 v-if="tournament" class="mt-3 mb-2 text-left">Torneo: {{ tournament.name }}</h3>
       <b-row class="mt-3 text-left">
         <b-col cols="8">
           <div v-if="tournament">
@@ -13,14 +13,11 @@
           </div>
           <div v-else>
             <Tournaments v-if="tournaments.length" :tournaments="tournaments"/>
-            <TournamentForm />
+            <TournamentForm/>
           </div>
         </b-col>
         <b-col cols="4">
-          <b-table v-if="tournament" small striped hover :items="tournament.positions"
-                   :fields="['name', 'won', 'lost', 'tie', 'score']"
-                   no-border-collapse>
-          </b-table>
+          <Positions v-if="tournament" :positions="tournament.positions"/>
         </b-col>
       </b-row>
     </b-container>
@@ -32,6 +29,7 @@ import Navbar from './components/Navbar.vue';
 import Tournaments from './components/Tournaments.vue';
 import Matchday from "./components/Matchday.vue";
 import TournamentForm from "./components/TournamentForm.vue";
+import Positions from "./components/Positions.vue";
 
 const axios = require('axios');
 
@@ -41,7 +39,8 @@ export default {
     Navbar,
     Tournaments,
     Matchday,
-    TournamentForm
+    TournamentForm,
+    Positions
   },
   data: function () {
     return {
@@ -52,7 +51,7 @@ export default {
     }
   },
   methods: {
-    resetTournament(){
+    resetTournament() {
       this.current_tournament = null
       this.tournament = null
     },
