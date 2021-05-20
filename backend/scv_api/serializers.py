@@ -40,3 +40,13 @@ class MatchSerializer(serializers.ModelSerializer):
         model = Match
         fields = ['id', 'matchday', 'home_team', 'away_team', 'home_goals', 'away_goals']
         depth = 1
+
+    def validate_home_goals(self, value):
+        if value < 0:
+            raise serializers.ValidationError('Must be greater than zero')
+        return value
+
+    def validate_away_goals(self, value):
+        if value < 0:
+            raise serializers.ValidationError('Must be greater than zero')
+        return value
