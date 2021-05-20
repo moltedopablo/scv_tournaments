@@ -69,11 +69,11 @@ export default {
 <style>
 @media only screen and (min-width: 600px) {
   .goals_column {
-    max-width: 15%;
+    max-width: 20%;
   }
 
   .teams_column {
-    width: 35%;
+    width: 30%;
   }
 }
 
