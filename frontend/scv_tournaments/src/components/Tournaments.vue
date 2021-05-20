@@ -9,8 +9,8 @@
           {{ t.name }}
         </b-list-group-item>
       </b-list-group>
-      <b-card-body>
-        <span class="mt-3 p-3" v-if="!tournaments.length">No hay torneos cargados</span>
+      <b-card-body v-if="!tournaments.length">
+        <span class="mt-3 p-3">No hay torneos cargados</span>
       </b-card-body>
     </b-card>
   </div>
