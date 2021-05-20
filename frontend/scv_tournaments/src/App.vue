@@ -4,12 +4,12 @@
     <b-container>
       <h3 v-if="tournament" class="mt-3 mb-2 text-left">Torneo: {{ tournament.name }}</h3>
       <b-row v-if="tournament" class="mt-3 text-left">
-        <b-col cols="8">
+        <b-col cols="7">
           <div v-for="matchday in matchdays" :key="matchday.id">
             <Matchday :matchday="matchday"/>
           </div>
         </b-col>
-        <b-col cols="4">
+        <b-col cols="5">
           <Positions v-if="tournament" :positions="tournament.positions"/>
         </b-col>
       </b-row>
