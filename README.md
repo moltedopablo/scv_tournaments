@@ -5,6 +5,19 @@ Clone project
 ```sh
 git clone https://github.com/moltedopablo/scv_tournaments.git
 ```
+## Quick docker install
+Install docker and docker-compose 
+
+https://docs.docker.com/get-docker
+
+https://docs.docker.com/compose/install
+
+Get the containers up
+```sh
+cd scv_tournaments
+docker-compose up -d
+```
+
 ### Backend installation for development
 
 Install python 3.8 and virtual env
