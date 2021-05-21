@@ -13,7 +13,7 @@ class TournamentSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError('Debe ser un número par')
 
         if value < 2:
-            raise serializers.ValidationError('Deben ser al menos')
+            raise serializers.ValidationError('Deben ser al menos 2')
 
         teams_count = Team.objects.count()
         if value > teams_count:
